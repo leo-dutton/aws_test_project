@@ -20,7 +20,7 @@ def create_aws_file_path(aws_file_path: str):
     return full_path
 
 def read_csv_from_aws(aws_file_path: str):
-    """_summary_
+    """Loads the csv file specified from aws into a pandas df
 
     Args:
         aws_file_path (str): path to file within s3 bucket
