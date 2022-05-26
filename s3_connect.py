@@ -33,5 +33,5 @@ def read_csv_from_aws(aws_file_path: str):
 
     return data
 
-
-read_csv_from_aws('/enrolment1/2020/month=01/myFile_17.csv')
+if __name__=='__main__':
+    read_csv_from_aws('/enrolment1/2020/month=01/myFile_17.csv')
