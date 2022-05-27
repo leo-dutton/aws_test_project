@@ -25,6 +25,8 @@ query = f'COPY "{SCHEMA}"."{TABLE}" FROM \'{AWS_FILE_PATH}\' \
 
 cursor.execute(query)
 conn.commit()
+cursor.close()
+conn.close()
 
 cursor.execute(f'SELECT * FROM "{SCHEMA}"."{TABLE}";')
 data = cursor.fetchall()

@@ -1,4 +1,4 @@
-from curses import _CursesWindow
+# from curses import _CursesWindow
 from webbrowser import get
 import pandas as pd
 import json
@@ -91,7 +91,7 @@ def connect_to_redshift():
     )
     return conn
 
-def create_cursor_for_redshift(return_conn=False):
+def create_cursor_for_redshift():
     """Creates a cursor in redshift for executing sql queries.
 
     Returns:
@@ -101,12 +101,10 @@ def create_cursor_for_redshift(return_conn=False):
     conn = connect_to_redshift()
     cursor: redshift_connector.Cursor = conn.cursor()
     
-    if return_conn:
-        return cursor, conn
-    else:
-        return cursor
+    return cursor, conn
 
-def execute_sql_query_in_redshift(query: str):
+
+def execute_sql_query_in_redshift(query: str, cursor):
     """Executes the query input in redshift and returns a table of results 
 
     Args:
@@ -115,8 +113,17 @@ def execute_sql_query_in_redshift(query: str):
     Returns:
         tuple: data returned from query
     """
-    cursor, conn = create_cursor_for_redshift(return_conn=True)
+    # cursor, _ = create_cursor_for_redshift()
     cursor.execute(query)
-    data = cursor.fetchall()
-    return data
+
+    if 'select' in query:
+        data = cursor.fetchall()
+        return data
+
+def commit_connection(conn):
+    conn.commit()
+
+def close_connection_and_cursor(cursor, conn):
+    cursor.close()
+    conn.close()
 
