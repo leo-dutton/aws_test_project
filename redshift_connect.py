@@ -37,7 +37,7 @@ def create_cursor_for_redshift():
     """
     conn = connect_to_redshift()
     cursor: redshift_connector.Cursor = conn.cursor()
-    return cursor
+    return cursor, conn
 
 def execute_sql_query_in_redshift(query: str):
     """Executes the query input in redshift and returns a table of results 
@@ -48,13 +48,14 @@ def execute_sql_query_in_redshift(query: str):
     Returns:
         tuple: data returned from query
     """
-    cursor = create_cursor_for_redshift()
+    cursor, conn = create_cursor_for_redshift()
     cursor.execute(query)
     data = cursor.fetchall()
     return data
 
-query = 'select * from "public"."100_csv_staging"'
-data = execute_sql_query_in_redshift(query)
-data = pd.DataFrame(data)
+if __name__=="__main__":
+    query = 'select * from "public"."100_csv_staging"'
+    data = execute_sql_query_in_redshift(query)
+    data = pd.DataFrame(data)
 
-print(data)
+    print(data)

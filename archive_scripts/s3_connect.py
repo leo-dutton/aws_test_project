@@ -16,7 +16,8 @@ def create_aws_file_path(aws_file_path: str):
     Returns:
         str: full path of file stored on s3
     """
-    full_path = os.path.join(_S3_PATH, _BUCKET, aws_file_path)
+    # full_path = os.path.join(_S3_PATH, _BUCKET, aws_file_path)
+    full_path = _S3_PATH + _BUCKET + aws_file_path
     return full_path
 
 def read_csv_from_aws(aws_file_path: str):
@@ -34,4 +35,5 @@ def read_csv_from_aws(aws_file_path: str):
     return data
 
 if __name__=='__main__':
-    read_csv_from_aws('/enrolment1/2020/month=01/myFile_17.csv')
+    data = read_csv_from_aws('/enrolment1/2020/month=01/myFile_17.csv')
+    print(data)
